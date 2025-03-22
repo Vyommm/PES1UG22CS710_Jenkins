@@ -1,40 +1,26 @@
 pipeline {
     agent any
 
-    stage('Build') {
-    steps {
-        script {
-            echo "Building the project..."
-            sh 'g++ -o hello_exec hello_error.cpp' // Intentional error (file doesn't exist)
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+            }
         }
-    }
-}
 
         stage('Test') {
             steps {
-                script {
-                    echo "Running tests..."
-                    sh './hello_exec' // Run the compiled C++ program
-                }
+                echo 'Running tests...'
             }
         }
 
         stage('Deploy') {
             steps {
                 script {
-                    echo "Deploying the application..."
-                    // Placeholder for deployment commands
+                    echo 'Deploying application...'
+                    error('Deployment Failed!') // Simulates a deployment failure
                 }
             }
-        }
-    }
-
-    post {
-        failure {
-            echo "Pipeline failed "
-        }
-        success {
-            echo "Pipeline executed successfully "
         }
     }
 }
